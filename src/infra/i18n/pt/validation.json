@@ -1,0 +1,56 @@
+{
+  "isDefined": "O campo $property deve ser definido",
+
+  "isNotEmpty": "O campo $property é obrigatório",
+  "isEmpty": "O campo $property deve estar vazio",
+
+  "isString": "O campo $property deve ser um texto",
+  "isNumber": "O campo $property deve ser um número",
+  "isInt": "O campo $property deve ser um número inteiro",
+  "isBoolean": "O campo $property deve ser verdadeiro ou falso",
+  "isDate": "O campo $property deve ser uma data válida",
+  "isEnum": "O campo $property deve ser um valor válido",
+  "isStrongPassword": "O campo $property deve conter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos",
+
+  "isEmail": "O campo $property deve ser um e-mail válido",
+  "isUrl": "O campo $property deve ser uma URL válida",
+  "isUUID": "O campo $property deve ser um UUID válido",
+  "isMongoId": "O campo $property deve ser um ID válido",
+
+  "isArray": "O campo $property deve ser uma lista",
+  "arrayNotEmpty": "O campo $property não pode ser uma lista vazia",
+  "arrayMinSize": "O campo $property deve conter no mínimo $constraint1 item(ns)",
+  "arrayMaxSize": "O campo $property deve conter no máximo $constraint1 item(ns)",
+
+  "min": "O campo $property deve ser maior ou igual a $constraint1",
+  "max": "O campo $property deve ser menor ou igual a $constraint1",
+
+  "minLength": "O campo $property deve ter no mínimo $constraint1 caracteres",
+  "maxLength": "O campo $property deve ter no máximo $constraint1 caracteres",
+  "length": "O campo $property deve conter entre $constraint1 e $constraint2 caracteres",
+
+  "matches": "O campo $property possui um formato inválido",
+
+  "isPositive": "O campo $property deve ser um número positivo",
+  "isNegative": "O campo $property deve ser um número negativo",
+
+  "isOptional": "O campo $property é opcional",
+
+  "isCreditCard": "O campo $property deve ser um cartão de crédito válido",
+  "isPhoneNumber": "O campo $property deve ser um telefone válido",
+  "isPostalCode": "O campo $property deve ser um CEP válido",
+
+  "isUppercase": "O campo $property deve conter apenas letras maiúsculas",
+  "isLowercase": "O campo $property deve conter apenas letras minúsculas",
+
+  "isJSON": "O campo $property deve ser um JSON válido",
+  "isObject": "O campo $property deve ser um objeto válido",
+
+  "isLatLong": "O campo $property deve conter uma latitude e longitude válidas",
+
+  "contains": "O campo $property deve conter \"$constraint1\"",
+  "notContains": "O campo $property não deve conter \"$constraint1\"",
+
+  "isIn": "O campo $property deve ser um dos valores permitidos",
+  "isNotIn": "O campo $property não deve conter valores inválidos"
+}
