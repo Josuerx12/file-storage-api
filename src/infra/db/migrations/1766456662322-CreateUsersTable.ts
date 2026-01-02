@@ -1,36 +1,142 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export class CreateUsersTable1766456662322 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`
-      CREATE TABLE users (
-        id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-        username VARCHAR(50) NOT NULL UNIQUE,
-        email VARCHAR(100) NOT NULL UNIQUE,
-        phone VARCHAR(15),
-        status VARCHAR(20) NOT NULL DEFAULT 'inactive',
-        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        deleted_at TIMESTAMP NULL
-      );
-    `);
+    await queryRunner.createTable(
+      new Table({
+        name: 'users',
+        columns: [
+          {
+            name: 'id',
+            type: 'char',
+            length: '36',
+            isPrimary: true,
+            generationStrategy: 'uuid',
+            default: '(UUID())',
+          },
+          {
+            name: 'username',
+            type: 'varchar',
+            length: '50',
+            isUnique: true,
+            isNullable: false,
+          },
+          {
+            name: 'email',
+            type: 'varchar',
+            length: '100',
+            isUnique: true,
+            isNullable: false,
+          },
+          {
+            name: 'phone',
+            type: 'varchar',
+            length: '15',
+            isNullable: true,
+          },
+          {
+            name: 'status',
+            type: 'varchar',
+            length: '20',
+            default: "'inactive'",
+            isNullable: false,
+          },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            isNullable: false,
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            onUpdate: 'CURRENT_TIMESTAMP',
+            isNullable: false,
+          },
+          {
+            name: 'deleted_at',
+            type: 'timestamp',
+            isNullable: true,
+          },
+        ],
+      }),
+      true,
+    );
 
-    await queryRunner.query(`
-      CREATE TABLE user_auths (
-        id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-        user_id CHAR(36) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL,
-        last_login TIMESTAMP NULL,
-        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        deleted_at TIMESTAMP NULL,
-        CONSTRAINT fk_user_auths_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-      );
-    `);
+    await queryRunner.createTable(
+      new Table({
+        name: 'user_auths',
+        columns: [
+          {
+            name: 'id',
+            type: 'char',
+            length: '36',
+            isPrimary: true,
+            generationStrategy: 'uuid',
+            default: '(UUID())',
+          },
+          {
+            name: 'user_id',
+            type: 'char',
+            length: '36',
+            isUnique: true,
+            isNullable: false,
+          },
+          {
+            name: 'password',
+            type: 'varchar',
+            length: '255',
+            isNullable: false,
+          },
+          {
+            name: 'last_login',
+            type: 'timestamp',
+            isNullable: true,
+          },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            isNullable: false,
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            onUpdate: 'CURRENT_TIMESTAMP',
+            isNullable: false,
+          },
+          {
+            name: 'deleted_at',
+            type: 'timestamp',
+            isNullable: true,
+          },
+        ],
+      }),
+      true,
+    );
+
+    await queryRunner.createForeignKey(
+      'user_auths',
+      new TableForeignKey({
+        name: 'fk_user_auths_user',
+        columnNames: ['user_id'],
+        referencedTableName: 'users',
+        referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE IF EXISTS user_auths;`);
-    await queryRunner.query(`DROP TABLE IF EXISTS users;`);
+    await queryRunner.dropForeignKey('user_auths', 'fk_user_auths_user');
+    await queryRunner.dropTable('user_auths');
+    await queryRunner.dropTable('users');
   }
 }
